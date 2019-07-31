@@ -1,0 +1,40 @@
+---
+- name: Install dependencies
+  yum:
+    name: libssh2-devel
+    state: present
+
+- name: Verify ssh2 extension is installed
+  stat:
+    path: "{{ php_extension_dir }}/ssh2.so"
+  register: php_ssh2_installed_stat
+
+- name: Unarchive php-ssh2 {{ php_ssh2_version }}
+  unarchive:
+    src: "{{ php_ssh2_download_url }}"
+    dest: /usr/local/src/
+    remote_src: "{{ php_ssh2_remote_src }}"
+    creates: /usr/local/src/ssh2-{{ php_ssh2_version }}
+  when:
+    - not php_ssh2_installed_stat.stat.exists
+
+- name: Install
+  command: "{{ item }}"
+  args:
+    chdir: "/usr/local/src/ssh2-{{ php_ssh2_version }}"
+  loop:
+    - /usr/local/php/bin/phpize
+    - ./configure --with-ssh2 --with-php-config=/usr/local/php/bin/php-config
+    - make
+    - make install
+  when:
+    - not php_ssh2_installed_stat.stat.exists
+  tags:
+    - skip_ansible_lint
+
+- name: Generate configuration file
+  copy:
+    content: "extension=ssh2.so"
+    dest: /usr/local/php/etc/php.d/ssh2.ini
+  notify:
+    - restart php-fpm
