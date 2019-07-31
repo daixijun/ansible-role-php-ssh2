@@ -1,5 +1,4 @@
 ---
-# defaults file for daixijun.php-redis
-php_redis_version: 4.3.0
-php_redis_remote_src: true
-php_redis_download_url: http://pecl.php.net/get/redis-{{ php_redis_version }}.tgz
+php_ssh2_version: 1.1.2
+php_ssh2_remote_src: true
+php_ssh2_download_url: http://pecl.php.net/get/ssh2-{{ php_ssh2_version }}.tgz
