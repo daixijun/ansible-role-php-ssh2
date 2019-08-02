@@ -36,5 +36,6 @@
   copy:
     content: "extension=ssh2.so"
     dest: /usr/local/php/etc/php.d/ssh2.ini
+    mode: '644'
   notify:
     - restart php-fpm
