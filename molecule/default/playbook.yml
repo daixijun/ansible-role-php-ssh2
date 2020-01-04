@@ -3,4 +3,5 @@
   hosts: all
   roles:
     - role: daixijun.php
-    - role: daixijun.php-redis
+      php_version: 7.3.13
+    - role: daixijun.php-ssh2

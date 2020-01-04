@@ -1,4 +1,4 @@
 ---
-php_ssh2_version: 1.1.2
+php_ssh2_version: 1.2
 php_ssh2_remote_src: true
 php_ssh2_download_url: http://pecl.php.net/get/ssh2-{{ php_ssh2_version }}.tgz
